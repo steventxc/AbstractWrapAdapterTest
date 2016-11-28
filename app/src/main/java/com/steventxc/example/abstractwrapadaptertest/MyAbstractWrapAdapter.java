@@ -63,4 +63,14 @@ public class MyAbstractWrapAdapter<Item extends IItem> extends AbstractWrapAdapt
     public int getItemInsertedBeforeCount(int position) {
         return position / SPAN;
     }
+
+    @Override
+    public int getItemCount() {
+        int itemCount = getAdapter().getItemCount();
+
+        int temp = itemInsertedBeforeCount(itemCount);
+        temp = itemInsertedBeforeCount(itemCount + temp);
+
+        return itemCount + temp;
+    }
 }
