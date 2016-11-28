@@ -1,27 +1,22 @@
 package com.steventxc.example.abstractwrapadaptertest;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.steventxc.example.abstractwrapadaptertest.items.SectorItem;
 import com.steventxc.example.abstractwrapadaptertest.items.TextItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FastItemAdapter<TextItem> mAdapter;
+    private CustomFastItemAdapter<TextItem> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         MyAbstractWrapAdapter<SectorItem> wrapAdapter = new MyAbstractWrapAdapter<>();
 
 
-        mAdapter = new FastItemAdapter<>();
+        mAdapter = new CustomFastItemAdapter<>(wrapAdapter);
         mAdapter.withOnClickListener(new FastAdapter.OnClickListener<TextItem>() {
             @Override
             public boolean onClick(View v, IAdapter<TextItem> adapter, TextItem item, int position) {

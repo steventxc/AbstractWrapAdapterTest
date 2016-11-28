@@ -3,7 +3,6 @@ package com.steventxc.example.abstractwrapadaptertest;
 import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.commons.adapters.AbstractWrapAdapter;
 import com.steventxc.example.abstractwrapadaptertest.items.SectorItem;
-import com.steventxc.example.abstractwrapadaptertest.items.TextItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +19,13 @@ public class MyAbstractWrapAdapter<Item extends IItem> extends AbstractWrapAdapt
     public MyAbstractWrapAdapter() {
         super(Collections.EMPTY_LIST);
 
+        for (int i = 0; i < 12; i++) {
+            SectorItem item = new SectorItem("Sector " + i).withIdentifier(i);
+            mList.add((Item) item);
+        }
+
         setItems(mList);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -30,8 +35,20 @@ public class MyAbstractWrapAdapter<Item extends IItem> extends AbstractWrapAdapt
 
         if (flag == 0) {
             // I want to add item dynamically here, so it will increase with data in the main adapter
-            SectorItem item = new SectorItem("Sector " + mList.size());
-            mList.add((Item) item);
+
+            boolean bingo = false;
+            for (IItem item : mList) {
+                if (item.getIdentifier() == position) {
+                    bingo = true;
+                    break;
+                }
+            }
+
+            if (!bingo) {
+                SectorItem item = new SectorItem("Sector " + mList.size()).withIdentifier(position);
+                mList.add((Item) item);
+            }
+
             return true;
         }
 
@@ -40,16 +57,10 @@ public class MyAbstractWrapAdapter<Item extends IItem> extends AbstractWrapAdapt
 
     @Override
     public int itemInsertedBeforeCount(int position) {
-        // TODO: 16/11/25  I'm not sure this is the best way
-
-        for (int i = 0; ; i++) {
-            int span = SPAN * (i + 1) + i;
-            if (position < span) {
-                return i;
-            }
-        }
-
+        return getItemInsertedBeforeCount(position);
     }
 
-
+    public int getItemInsertedBeforeCount(int position) {
+        return position / SPAN;
+    }
 }
