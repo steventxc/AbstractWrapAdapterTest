@@ -25,7 +25,6 @@ public class MyAbstractWrapAdapter<Item extends IItem> extends AbstractWrapAdapt
         }
 
         setItems(mList);
-        notifyDataSetChanged();
     }
 
     @Override
@@ -68,8 +67,9 @@ public class MyAbstractWrapAdapter<Item extends IItem> extends AbstractWrapAdapt
     public int getItemCount() {
         int itemCount = getAdapter().getItemCount();
 
-        int temp = itemInsertedBeforeCount(itemCount);
-        temp = itemInsertedBeforeCount(itemCount + temp);
+        int temp = itemCount / (SPAN - 1);
+        if (itemCount % (SPAN - 1) == 0)
+            temp --;
 
         return itemCount + temp;
     }
