@@ -12,17 +12,12 @@ import java.util.Collections;
  */
 
 public class MyAbstractWrapAdapter<Item extends IItem> extends AbstractWrapAdapter<Item> {
-    public static final int SPAN = 10;
+    public static final int SPAN = 31;
 
     private ArrayList<Item> mList = new ArrayList<>();
 
     public MyAbstractWrapAdapter() {
         super(Collections.EMPTY_LIST);
-
-        for (int i = 0; i < 12; i++) {
-            SectorItem item = new SectorItem("Sector " + i).withIdentifier(i);
-            mList.add((Item) item);
-        }
 
         setItems(mList);
     }
